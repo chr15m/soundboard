@@ -1,59 +1,46 @@
-body {
-  font-family: 'Helvetica Neue', Verdana, Helvetica, Arial, sans-serif;
-  max-width: 600px;
-  margin: 0 auto;
-  -webkit-font-smoothing: antialiased;
-  font-size: 1.125em;
-  color: #a5a5a5;
-  line-height: 1.5em;
-  background-color: #263238;
+@import url(font/font-clr6x12medium.css);
+@import url(font/font-snap.css);
+
+* {
+  color: #788B39;
+  font-family: 'snap.seregular';
+  text-shadow: 4px 4px 0px #D9E8A9;
+  box-sizing: border-box;
+  font-size: 20px;
 }
 
-h1, h2, h3 {
-  color: #61808F;
-}
-h1 {
-  font-size: 2.5em
-}
-
-h2 {
-  font-size: 2em
-}
-
-h3 {
-  font-size: 1.5em
-}
-
-a {
-  text-decoration: none;
-  color: #09f;
-}
-
-a:hover {
-  text-decoration: underline;
-}
-
-p {
+html, body {
+  background-color: #F4FFDC;
   text-align: center;
 }
 
-input, button {
-  font-size: 1em;
-  font-weight: bold;
-  margin: 0.25em;
-  border-radius: 4px;
-  padding: 0.25em;
-  color: #C0D3DB;
+.symbols {
+  font-family: 'clr6x12medium';
+  font-size: 24px;
 }
 
-input {
-  border: 2px solid #8CA5AF;
-  background-color: #44859F;
-  width: 50%;
+button, input {
+  height: 64px;
+}
+
+button, input, .box {
+  padding: 16px;
+  border-image-source: url(border.svg);
+  border-image-slice: 20 20 20 20;
+  border-image-width: 20px 20px 20px 20px;
+  border-image-outset: 0px 0px 0px 0px;
+  border-image-repeat: repeat repeat;
 }
 
 button {
-  border: 2px solid #8CA5AF;
-  background-color: #44859F;
-  width: 20%;
+  font-family: 'clr6x12medium';
+  font-size: 24px;
+  font-weight: bold;
+  background: none;
+  min-width: 100px;
+}
+
+input {
+  background: none;
+  text-overflow: ellipsis;
 }
