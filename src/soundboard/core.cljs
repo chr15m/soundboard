@@ -6,12 +6,17 @@
 
 (defonce sounds (r/atom []))
 
+(defn generate-sound [v]
+  (try
+    ((aget js/sfxr "toAudio") v)
+    (catch :default e nil)))
+
 (defn add-empty-slot! [ev]
   (swap! sounds #(into {(js/Math.random) {:def ""}} %)))
 
 (defn update-def! [id s ev]
   (let [v (.. ev -target -value)
-        sound (try (.getAudio (.generate (js/SoundEffect. v))) (catch :default e nil))]
+        sound (generate-sound v)]
     (swap! sounds assoc id {:def v :sound sound})))
 
 (defn play-sound [synth-def]

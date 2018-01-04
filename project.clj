@@ -40,8 +40,7 @@
                                          :provides ["sfxr"]}]
                          :pretty-print  true}
                         :figwheel
-                        {:on-jsload "soundboard.core/mount-root"
-                         :open-urls ["http://localhost:3449/index.html"]}}
+                        {:on-jsload "soundboard.core/mount-root"}}
                        :release
                        {:source-paths ["src" "env/prod/cljs"]
                         :compiler
