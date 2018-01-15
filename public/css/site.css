@@ -9,9 +9,16 @@
   font-size: 20px;
 }
 
+*:focus {
+  outline: 0;
+}
+
 html, body {
   background-color: #F4FFDC;
   text-align: center;
+  width: 400px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .symbols {
@@ -43,4 +50,12 @@ button {
 input {
   background: none;
   text-overflow: ellipsis;
+}
+
+.invisible {
+  visibility: hidden;
+}
+
+.slider {
+  width: 100% !important;
 }

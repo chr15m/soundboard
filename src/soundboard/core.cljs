@@ -8,6 +8,42 @@
 
 (defonce sounds (r/atom (try (js->clj (js/JSON.parse (aget js/localStorage "soundboard"))) (catch :default e {}))))
 
+(def hex "0123456789abcdef")
+
+(def parameters
+  ["e.a"
+   "e.s"
+   "e.p"
+   "e.r"
+
+   "♪"
+   "♪_"
+   "↕"
+   "↕↕"
+
+   "v"
+   "v.↕"
+   "a"
+   "a.↕"
+
+   "d"
+   "d.↕"
+   "f"
+   "f.↕"
+
+   "lo"
+   "l.↕"
+
+   "hi"
+   "h.↕"
+
+   "rez"
+   "re"
+   "▶"
+   "x"])
+
+(def notes ["C" "C#" "D" "D#" "E" "F" "F#" "G" "G#" "A" "A#" "B"])
+
 (defn generate-sound [v]
   (try
     ((aget js/sfxr "toAudio") v)
@@ -38,17 +74,82 @@
 ;; -------------------------
 ;; Views
 
-(defn home-page []
-  [:div [:h2 "sndbrd"]
-   (doall (for [[id s] @sounds]
-     (if s
-       (with-meta
-         [:p [:input.def {:value (get s "def")
-                          :on-change (partial update-def! id)} ]
-          [:button {:on-click (partial remove-sound! id)} "x"]
-          [:button {:on-click (partial play-sound s)} "▶"]]
-         {:key id}))))
-   [:p [:button {:on-click add-empty-slot!} "+"]]])
+; left arrow: ←
+;
+
+(defn page-settings []
+  [:div
+   [:button "x"]
+   [:button "sync"]
+   [:button.invisible ""]
+   [:button.invisible ""]
+   
+   [:button.slider "nudge"]])
+
+(defn page-note []
+  [:div
+   [:button "←"]
+   [:button.invisible ""]
+   [:button.invisible ""]
+   [:button.invisible ""]
+   
+   (for [n notes]
+     [:button n])
+   
+   (for [o (range 8)]
+     [:button (str o)])])
+
+(defn page-random []
+  [:div
+   [:button "←"]
+   [:button.invisible ""]
+   [:button "▶"]
+   [:button "ok"]
+   
+   [:button "coin"]
+   [:button "shot"]
+   [:button "boom"]
+   [:button "yay"]
+   
+   [:button "ouch"]
+   [:button "boing"]
+   [:button "blip"]
+   [:button "synth"]
+   
+   [:button.slider "rnd"]])
+
+(defn page-edit []
+  [:div
+   [:button "←"]
+   [:button "rnd"]
+   [:button "↑"]
+   [:button "↓"]
+   
+   (for [i parameters]
+     [:button (if (= i "") {:class "invisible"}) i])
+   
+   [:button.slider]])
+
+(defn page-channels []
+  [:div
+   [:button "1"]
+   [:button "[ 2 ]"]
+   [:button "3"]
+   [:button "4"]])
+
+(defn page-home []
+  [:div
+   [:button.invisible "."]
+   [:button "..."]
+   [:button "?"]
+   [:button (get ["▶" "■"] 0)]
+   
+   (doall
+     (for [s (range 16)]
+       [:button (str (get hex s) " .")]))])
+
+(defn container []
+  [page-random])
 
 ;; -------------------------
 ;; Initialize app
@@ -58,7 +159,7 @@
   (swap! sounds update-in [id] assoc "sound" (generate-sound (get s "def"))))
 
 (defn mount-root []
-  (r/render [home-page] (.getElementById js/document "app")))
+  (r/render [container] (.getElementById js/document "app")))
 
 (defn init! []
   (mount-root))
