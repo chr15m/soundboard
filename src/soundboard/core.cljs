@@ -6,9 +6,12 @@
 
 (enable-console-print!) 
 
-(defonce sounds (r/atom (try (js->clj (js/JSON.parse (aget js/localStorage "soundboard"))) (catch :default e {}))))
+(defonce sounds
+  (r/atom (try
+            (js->clj (js/JSON.parse (aget js/localStorage "soundboard")))
+            (catch :default e {}))))
 
-(def hex "0123456789abcdef")
+(def hex "0123456789ABCDEF")
 
 (def parameters
   ["e.a"
@@ -99,7 +102,7 @@
    (for [o (range 8)]
      [:button (str o)])])
 
-(defn page-random []
+(defn page-random-sound []
   [:div
    [:button "←"]
    [:button.invisible ""]
@@ -140,16 +143,16 @@
 (defn page-home []
   [:div
    [:button.invisible "."]
-   [:button "..."]
+   [:button {:title "channel"} "..."]
    [:button "?"]
    [:button (get ["▶" "■"] 0)]
    
    (doall
      (for [s (range 16)]
-       [:button (str (get hex s) " .")]))])
+       [:button (str (get hex s))]))])
 
 (defn container []
-  [page-random])
+  [page-home])
 
 ;; -------------------------
 ;; Initialize app
